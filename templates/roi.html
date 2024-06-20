@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROI Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+            background-color: #343a40;
+        }
+
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+            font-size: 1.2em;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            background: #fff;
+            animation: bounceInUp 1s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #007bff, #00c6ff);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #00c6ff, #007bff);
+            transform: scale(1.1);
+        }
+
+        .form-group input {
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            font-size: 1.1em;
+        }
+
+        .form-group label {
+            font-size: 1.1em;
+            color: #495057;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            animation: bounceInUp 1s;
+        }
+
+        .result h4 {
+            font-size: 1.5em;
+            color: #007bff;
+        }
+
+        .result p {
+            font-size: 1.2em;
+            color: #495057;
+        }
+
+        @keyframes bounceInUp {
+            from {
+                transform: translate3d(0, 100%, 0);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate3d(0, 0, 0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Financial Calculators</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('dcf') }}">DCF Calculator</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('loan') }}">Loan Calculator</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('roi') }}">ROI Calculator</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('npv_irr') }}">NPV & IRR Calculator</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="card animate__animated animate__bounceInUp">
+            <div class="card-body">
+                <h2 class="card-title text-center">Return on Investment (ROI) Calculator</h2>
+                <form id="roiForm">
+                    <div class="form-group">
+                        <label for="initial_investment">Initial Investment (in ₹ crores):</label>
+                        <input type="number" class="form-control" id="initial_investment" name="initial_investment" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="net_profit">Net Profit (in ₹ crores):</label>
+                        <input type="number" class="form-control" id="net_profit" name="net_profit" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="investment_time">Investment Time (in years):</label>
+                        <input type="number" class="form-control" id="investment_time" name="investment_time" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Calculate</button>
+                </form>
+                <div id="roiResult" class="mt-4 result animate__animated animate__bounceInUp" style="display: none;">
+                    <h4>Calculation Result</h4>
+                    <p id="roiValue"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#roiForm').on('submit', function(e){
+                e.preventDefault();
+                let initial_investment = parseFloat($('#initial_investment').val());
+                let net_profit = parseFloat($('#net_profit').val());
+                let investment_time = parseFloat($('#investment_time').val());
+
+                let roi = (net_profit - initial_investment) / initial_investment * 100;
+                let annual_roi = roi / investment_time;
+
+                $('#roiValue').text(`ROI: ${roi.toFixed(2)}%, Annualized ROI: ${annual_roi.toFixed(2)}%`);
+                $('#roiResult').show();
+            });
+        });
+    </script>
+</body>
+</html>

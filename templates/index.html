@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Calculators</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+            background-color: #343a40;
+        }
+
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+            font-size: 1.2em;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            background: #fff;
+            animation: bounceInUp 1s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #007bff, #00c6ff);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #00c6ff, #007bff);
+            transform: scale(1.1);
+        }
+
+        .title {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #343a40;
+        }
+
+        @keyframes bounceInUp {
+            from {
+                transform: translate3d(0, 100%, 0);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate3d(0, 0, 0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Financial Calculators</a>
+    </nav>
+    <div class="container">
+        <div class="card animate__animated animate__bounceInUp">
+            <h1 class="title">Welcome to Financial Calculators</h1>
+            <p>Select a calculator from the options below:</p>
+            <a class="btn btn-primary d-block mb-3" href="{{ url_for('dcf') }}">DCF Calculator</a>
+            <a class="btn btn-primary d-block mb-3" href="{{ url_for('loan') }}">Loan Calculator</a>
+            <a class="btn btn-primary d-block mb-3" href="{{ url_for('roi') }}">ROI Calculator</a>
+            <a class="btn btn-primary d-block mb-3" href="{{ url_for('npv_irr') }}">NPV & IRR Calculator</a>
+        </div>
+    </div>
+</body>
+</html>
